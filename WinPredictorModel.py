@@ -1,11 +1,13 @@
-import pandas as pd
-import numpy as np
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.model_selection import train_test_split
+# Importación de librerias
+
+import pandas as pd #procesar datos
+import numpy as np #procesar datos
+from sklearn.ensemble import RandomForestRegressor #modelo de machine learning
+from sklearn.metrics import mean_squared_error, r2_score #metricas estadisticas para evaluar modelo
+from sklearn.model_selection import train_test_split #entrenamiento y pruebas al modelo
 
 # Leer archivos de estadisticas de equipos desde el 2000 hasta el 2023
-df = pd.read_csv("C:/Users/jonat/OneDrive/Desktop/Python ML project/Database/nba_team_stats_00_to_23.csv")
+df = pd.read_csv("nba_team_stats_00_to_23.csv")
 
 
 # Se dividen los datos entre decadas o "eras"
