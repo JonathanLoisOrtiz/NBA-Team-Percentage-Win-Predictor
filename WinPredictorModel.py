@@ -21,7 +21,7 @@ df2020s[['three_pointers_attempted', 'turnovers', 'rebounds', 'steals',
     df2020s[['three_pointers_attempted', 'turnovers', 'rebounds', 'steals', 
              'field_goals_attempted', 'plus_minus']] / 82).round(2)
 
-# Se definen los atributos (X) y lo que queremos predecir (Y)
+# Se definen los atributos (X) y lo que queremos predecir (y)
 X = df2020s[['field_goal_percentage', 'three_pointers_attempted', 'turnovers', 
              'rebounds', 'steals', 'field_goals_attempted', 'three_point_percentage','plus_minus']]
 
