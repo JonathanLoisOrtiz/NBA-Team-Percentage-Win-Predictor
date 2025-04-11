@@ -22,7 +22,7 @@ df2020s[['three_pointers_attempted', 'turnovers', 'rebounds', 'steals',
 # Define features (X) and target (y)
 X = df2020s[['field_goal_percentage', 'three_pointers_attempted', 'turnovers', 
              'rebounds', 'steals', 'field_goals_attempted', 'three_point_percentage','plus_minus']]
-y = df2020s['win_percentage']
+y = df2020s['wins']
 
 # Train-test split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -33,6 +33,7 @@ model.fit(X_train, y_train)
 
 # Predictions
 pred1 = model.predict(X_test)
+
 
 # Model evaluation
 mse = mean_squared_error(y_test, pred1)
@@ -82,6 +83,6 @@ new_data = pd.DataFrame({
 
 Newpred = model.predict(new_data)
 
-print("\nYour team will win approximately" , Newpred*100 , "of their games!")
+print("\nYour team will win approximately" , round(Newpred) , "games!")
 
 
