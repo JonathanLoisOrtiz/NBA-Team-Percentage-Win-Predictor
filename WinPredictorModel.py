@@ -4,30 +4,31 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
 
-# Load datasets
+# Leer archivos de estadisticas de equipos desde el 2000 hasta el 2023
 df = pd.read_csv("C:/Users/jonat/OneDrive/Desktop/Python ML project/Database/nba_team_stats_00_to_23.csv")
-dfPlayers = pd.read_csv("C:/Users/jonat/OneDrive/Desktop/Python ML project/Database/NBA_Player_Stats.csv")
 
-# Divide dataset into decades
+
+# Se dividen los datos entre decadas o "eras"
 df2000s = df[(df['season'].str[2:4].astype(int) >= 0) & (df['season'].str[2:4].astype(int) < 10)].copy()
 df2010s = df[(df['season'].str[2:4].astype(int) >= 10) & (df['season'].str[2:4].astype(int) < 20)].copy()
 df2020s = df[(df['season'].str[2:4].astype(int) >= 20) & (df['season'].str[2:4].astype(int) < 30)].copy()
 
-# Convert stats to "per game"
+# Se convierten datos de totales por temporada a estadisticas "por juego"
 df2020s[['three_pointers_attempted', 'turnovers', 'rebounds', 'steals', 
          'field_goals_attempted', 'plus_minus']] = (
     df2020s[['three_pointers_attempted', 'turnovers', 'rebounds', 'steals', 
              'field_goals_attempted', 'plus_minus']] / 82).round(2)
 
-# Define features (X) and target (y)
+# Se definen los atributos (X) y lo que queremos predecir (Y)
 X = df2020s[['field_goal_percentage', 'three_pointers_attempted', 'turnovers', 
              'rebounds', 'steals', 'field_goals_attempted', 'three_point_percentage','plus_minus']]
+
 y = df2020s['wins']
 
 # Train-test split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Initialize and train RandomForestRegressor
+# Se inicializa y se entrena el modelo Random Forest Regressor
 model = RandomForestRegressor(n_estimators=150, random_state=42)
 model.fit(X_train, y_train)
 
@@ -35,7 +36,7 @@ model.fit(X_train, y_train)
 pred1 = model.predict(X_test)
 
 
-# Model evaluation
+# Se evalua el modelo
 mse = mean_squared_error(y_test, pred1)
 r2 = r2_score(y_test, pred1)
 mape = np.mean(np.abs((y_test - pred1) / y_test)) * 100
@@ -58,6 +59,8 @@ print("Mean Squared Error:", mse)
 print("R² Score:", r2)
 print(f"Prediction Accuracy: {accuracy:.2f}%")
 
+
+# Se puede interactuar con el modelo 
 FGP = input("field_goal_percentage: ")
 TPA = input("three_pointers_attempted: ")
 TO = input("turnovers: ")
@@ -69,7 +72,7 @@ PLM = input("plus_minus: ")
 
 
 
-# Make predictions
+# Se almacena la data entregada
 new_data = pd.DataFrame({
     'field_goal_percentage': [FGP],  
     'three_pointers_attempted': [TPA],
@@ -81,6 +84,7 @@ new_data = pd.DataFrame({
     'plus_minus': [PLM]
 })
 
+# Nueva Predicción 
 Newpred = model.predict(new_data)
 
 print("\nYour team will win approximately" , round(Newpred) , "games!")
