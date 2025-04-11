@@ -21,7 +21,7 @@ df2020s[['three_pointers_attempted', 'turnovers', 'rebounds', 'steals',
 
 # Define features (X) and target (y)
 X = df2020s[['field_goal_percentage', 'three_pointers_attempted', 'turnovers', 
-             'rebounds', 'steals', 'field_goals_attempted', 'three_point_percentage', 'blocks_attempted','plus_minus']]
+             'rebounds', 'steals', 'field_goals_attempted', 'three_point_percentage','plus_minus']]
 y = df2020s['win_percentage']
 
 # Train-test split
@@ -56,5 +56,32 @@ print(importance_df)
 print("Mean Squared Error:", mse)
 print("R² Score:", r2)
 print(f"Prediction Accuracy: {accuracy:.2f}%")
+
+FGP = input("field_goal_percentage: ")
+TPA = input("three_pointers_attempted: ")
+TO = input("turnovers: ")
+REB = input("rebounds: ")
+STL = input("steals: ")
+FGA = input("field_goal_attempted: ")
+TPP = input("three_point_percentage: ")
+PLM = input("plus_minus: ")
+
+
+
+# Make predictions
+new_data = pd.DataFrame({
+    'field_goal_percentage': [FGP],  
+    'three_pointers_attempted': [TPA],
+    'turnovers': [TO],
+    'rebounds': [REB],
+    'steals': [STL],
+    'field_goals_attempted': [FGA],
+    'three_point_percentage': [TPP],
+    'plus_minus': [PLM]
+})
+
+Newpred = model.predict(new_data)
+
+print("\nYour team will win approximately" , Newpred*100 , "of their games!")
 
 
